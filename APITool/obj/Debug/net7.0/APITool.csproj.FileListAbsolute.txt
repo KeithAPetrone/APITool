@@ -28,3 +28,6 @@ C:\Users\keith\OneDrive\Desktop\APITool\APITool\obj\Debug\net7.0\refint\APITool.
 C:\Users\keith\OneDrive\Desktop\APITool\APITool\obj\Debug\net7.0\APITool.pdb
 C:\Users\keith\OneDrive\Desktop\APITool\APITool\obj\Debug\net7.0\APITool.genruntimeconfig.cache
 C:\Users\keith\OneDrive\Desktop\APITool\APITool\obj\Debug\net7.0\ref\APITool.dll
+C:\Users\keith\OneDrive\Desktop\APITool\APITool\bin\Debug\net7.0\Newtonsoft.Json.dll
+C:\Users\keith\OneDrive\Desktop\APITool\APITool\obj\Debug\net7.0\APITool.csproj.AssemblyReference.cache
+C:\Users\keith\OneDrive\Desktop\APITool\APITool\obj\Debug\net7.0\APITool.csproj.CopyComplete

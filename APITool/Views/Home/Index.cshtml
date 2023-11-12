@@ -1,8 +1,45 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "API Tool";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">API Tool</h1>
+    <h2>Jokes API</h2>
+    <h3><a asp-action="GetJoke">Get a Joke</a></h3>
+    <h3><a asp-action="GetTenJokes">Get 10 Jokes</a></h3>
+    <form asp-action="GetJokeByType" method="post">
+        <h3>Get joke by type</h3>
+        <div class="form-group">
+            <label for="Type">Type:</label>
+            <input class="form-control" name="Type" />
+        </div>
+    </form>
+    <form asp-action="GetJokeByID" method="post">
+        <h3>Get joke by ID</h3>
+        <div class="form-group">
+            <label for="Id">ID:</label>
+            <input class="form-control" name="Id" />
+        </div>
+    </form>
+    <table class="table table-sm table-striped table-bordered m-2">
+        <thead>
+            <tr>
+                <th>Type</th>
+                <th>Setup</th>
+                <th>Punchline</th>
+                <th>ID</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var j in Model)
+            {
+                <tr>
+                    <td>@j.Type</td>
+                    <td>@j.Setup</td>
+                    <td>@j.Punchline</td>
+                    <td>@j.Id</td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>
