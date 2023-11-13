@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
+using Swashbuckle.AspNetCore.Annotations;
 using System.Diagnostics;
 using System.Linq;
 
@@ -32,12 +33,9 @@ namespace APITool.Controllers
                 {
                     string apiResponse = await response.Content.ReadAsStringAsync();
                     var joke = JsonConvert.DeserializeObject<Joke>(apiResponse);
-                    if (_dbcontext.Jokes.Any(j => j.Id == joke.Id))
-                    {
-                        _dbcontext.Jokes.Add(joke);
-                        _dbcontext.SaveChanges();
-                        jokes.Add(joke);
-                    }
+                    _dbcontext.Jokes.Add(joke);
+                    _dbcontext.SaveChanges();
+                    jokes.Add(joke);
                 }
             }
             return View("Index", jokes);
@@ -54,11 +52,8 @@ namespace APITool.Controllers
                     jokes = JsonConvert.DeserializeObject<List<Joke>>(apiResponse);
                     foreach (var joke in jokes)
                     {
-                        if (_dbcontext.Jokes.Any(j => j.Id == joke.Id))
-                        {
-                            _dbcontext.Jokes.Add(joke);
-                            _dbcontext.SaveChanges();
-                        }
+                        _dbcontext.Jokes.Add(joke);
+                        _dbcontext.SaveChanges();
                     }
                 }
             }
@@ -76,11 +71,8 @@ namespace APITool.Controllers
                     jokes = JsonConvert.DeserializeObject<List<Joke>>(apiResponse);
                     foreach (var joke in jokes)
                     {
-                        if (_dbcontext.Jokes.Any(j => j.Id == joke.Id))
-                        {
-                            _dbcontext.Jokes.Add(joke);
-                            _dbcontext.SaveChanges();
-                        }
+                        _dbcontext.Jokes.Add(joke);
+                        _dbcontext.SaveChanges();
                     }
                 }
             }
@@ -96,12 +88,9 @@ namespace APITool.Controllers
                 {
                     string apiResponse = await response.Content.ReadAsStringAsync();
                     var joke = JsonConvert.DeserializeObject<Joke>(apiResponse);
-                    if (_dbcontext.Jokes.Any(j => j.Id != joke.Id))
-                    {
-                        _dbcontext.Jokes.Add(joke);
-                        _dbcontext.SaveChanges();
-                        jokes.Add(joke);
-                    }
+                    _dbcontext.Jokes.Add(joke);
+                    _dbcontext.SaveChanges();
+                    jokes.Add(joke);
                 }
             }
             return View("Index", jokes);
