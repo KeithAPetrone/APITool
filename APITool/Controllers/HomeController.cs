@@ -1,22 +1,26 @@
 ﻿using APITool.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using System.Diagnostics;
+using System.Linq;
 
 namespace APITool.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly JokeContext _dbcontext;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(JokeContext dbcontext)
         {
-            _logger = logger;
+            _dbcontext = dbcontext;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View(new List<Joke>());
+            return View(_dbcontext.Jokes.ToList());
         }
 
         public async Task<IActionResult> GetJokeAsync()
@@ -27,7 +31,13 @@ namespace APITool.Controllers
                 using (var response = await httpClient.GetAsync("https://official-joke-api.appspot.com/random_joke"))
                 {
                     string apiResponse = await response.Content.ReadAsStringAsync();
-                    jokes.Add(JsonConvert.DeserializeObject<Joke>(apiResponse));
+                    var joke = JsonConvert.DeserializeObject<Joke>(apiResponse);
+                    if (_dbcontext.Jokes.Any(j => j.Id == joke.Id))
+                    {
+                        _dbcontext.Jokes.Add(joke);
+                        _dbcontext.SaveChanges();
+                        jokes.Add(joke);
+                    }
                 }
             }
             return View("Index", jokes);
@@ -42,6 +52,14 @@ namespace APITool.Controllers
                 {
                     string apiResponse = await response.Content.ReadAsStringAsync();
                     jokes = JsonConvert.DeserializeObject<List<Joke>>(apiResponse);
+                    foreach (var joke in jokes)
+                    {
+                        if (_dbcontext.Jokes.Any(j => j.Id == joke.Id))
+                        {
+                            _dbcontext.Jokes.Add(joke);
+                            _dbcontext.SaveChanges();
+                        }
+                    }
                 }
             }
             return View("Index", jokes);
@@ -56,6 +74,14 @@ namespace APITool.Controllers
                 {
                     string apiResponse = await response.Content.ReadAsStringAsync();
                     jokes = JsonConvert.DeserializeObject<List<Joke>>(apiResponse);
+                    foreach (var joke in jokes)
+                    {
+                        if (_dbcontext.Jokes.Any(j => j.Id == joke.Id))
+                        {
+                            _dbcontext.Jokes.Add(joke);
+                            _dbcontext.SaveChanges();
+                        }
+                    }
                 }
             }
             return View("Index", jokes);
@@ -69,7 +95,13 @@ namespace APITool.Controllers
                 using (var response = await httpClient.GetAsync("https://official-joke-api.appspot.com/jokes/" + id))
                 {
                     string apiResponse = await response.Content.ReadAsStringAsync();
-                    jokes.Add(JsonConvert.DeserializeObject<Joke>(apiResponse));
+                    var joke = JsonConvert.DeserializeObject<Joke>(apiResponse);
+                    if (_dbcontext.Jokes.Any(j => j.Id != joke.Id))
+                    {
+                        _dbcontext.Jokes.Add(joke);
+                        _dbcontext.SaveChanges();
+                        jokes.Add(joke);
+                    }
                 }
             }
             return View("Index", jokes);
