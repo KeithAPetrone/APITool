@@ -26,7 +26,7 @@ namespace APITool.API
         /// </summary>
         [SwaggerOperation(Summary = "Gets all jokes.")]
         [Route("/get")]
-        [HttpGet("")]
+        [HttpGet]
         public IEnumerable<Joke> RetrieveAllJokes()
         {
             return _dbcontext.Jokes.ToList();
@@ -38,7 +38,7 @@ namespace APITool.API
         /// <param name="ID">The ID of the joke to retrieve.</param>
         [SwaggerOperation(Summary = "Get a joke by id.")]
         [Route("/getID")]
-        [HttpGet("{ID}")]
+        [HttpGet]
         public IEnumerable<Joke> RetrieveJokeByID(int id)
         {
             return _dbcontext.Jokes.Where(x => x.Id == id);
